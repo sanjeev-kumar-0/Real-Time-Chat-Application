@@ -1,0 +1,62 @@
+/* Reset and layout */
+* { box-sizing: border-box; }
+:root{
+	--bg:#eef2f7;
+	--sidebar-start:#312e81; /* indigo-800 */
+	--sidebar-end:#1e293b; /* slate-800 */
+	--accent:#6366f1; /* indigo-500 */
+	--accent-2:#4338ca; /* indigo-600 */
+	--me-text:#ffffff;
+	--other-bubble:#ffffff;
+}
+
+body { font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; height:100vh; background:var(--bg); }
+#app { display:flex; flex-direction:column; height:100vh; }
+
+/* Top header (moved from left to top) */
+#sidebar { width:100%; height:84px; padding:16px 24px; background:linear-gradient(180deg,var(--sidebar-start), var(--sidebar-end)); color:#e6f7f5; display:flex; align-items:center; gap:16px; position:fixed; top:0; left:0; z-index:20; box-shadow:0 4px 24px rgba(16,24,40,0.12); }
+#sidebar h1 { margin:0; font-size:20px; color:#e6f7f5; }
+#userBox { margin-left:auto; display:flex; gap:8px; align-items:center; }
+#userBox label{display:none;} /* small UI tidy - label hidden in header */
+#userBox input { padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:#fff; }
+#userBox button { padding:8px 12px; border-radius:999px; border:none; background:var(--accent); color:var(--me-text); font-weight:600; cursor:pointer; }
+#info { display:none; }
+
+/* Chat area sits below fixed header */
+#chatArea { flex:1; display:flex; flex-direction:column; margin-top:84px; }
+#chatArea.hidden { display:none; }
+
+/* Message list */
+#messages { list-style:none; padding:28px; margin:0; overflow:auto; flex:1; display:flex; flex-direction:column; gap:10px; }
+
+/* Prevent overlap with floating input */
+#messages { padding-bottom:160px; }
+
+/* Message bubbles */
+#messages li { max-width:72%; padding:12px 14px; border-radius:14px; background:var(--other-bubble); box-shadow:0 6px 16px rgba(16,24,40,0.04); align-self:flex-start; display:flex; flex-direction:column; }
+#messages li.system { background:transparent; color:#6b7280; font-style:italic; align-self:center; }
+
+#messages li:not(.system) .who { font-weight:700; margin-bottom:6px; color:#334155; }
+#messages li:not(.system) .text { color:#0f1724; }
+
+/* Current user's message - right aligned */
+#messages li.me { background:linear-gradient(180deg,var(--accent), var(--accent-2)); color:var(--me-text); align-self:flex-end; }
+#messages li.me .who { color:rgba(255,255,255,0.95); }
+#messages li.me .text { color:rgba(255,255,255,0.98); }
+
+.time { margin-top:8px; font-size:11px; color:rgba(15,23,36,0.45); }
+.muted { color:rgba(15,23,36,0.45); }
+
+/* Floating input box positioned bottom-right */
+#sendForm { position:fixed; bottom:20px; right:20px; width:420px; display:flex; align-items:center; gap:8px; padding:8px; border-radius:999px; background:rgba(255,255,255,0.96); box-shadow:0 10px 30px rgba(2,6,23,0.12); z-index:30; }
+#messageInput { flex:1; padding:10px 14px; border-radius:999px; border:1px solid rgba(15,23,36,0.06); background:#fff; outline:none; }
+#sendForm button { padding:10px 14px; border-radius:999px; border:none; background:var(--accent); color:white; font-weight:600; cursor:pointer; }
+
+#typing { position:fixed; bottom:80px; right:24px; font-size:13px; color:#334155; z-index:29; }
+
+/* Responsive: smaller screens - make input full width and header compact */
+@media (max-width:900px) {
+	#sendForm { right:12px; left:12px; width:auto; }
+	#sidebar { height:72px; padding:12px; }
+	#messages li { max-width:86%; }
+}
